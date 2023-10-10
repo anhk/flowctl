@@ -1,0 +1,6 @@
+{
+    "files.associations": {
+        "bpf_helper_defs.h": "c",
+        "bpf.h": "c"
+    }
+}
