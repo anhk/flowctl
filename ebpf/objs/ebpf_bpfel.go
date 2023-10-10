@@ -53,9 +53,16 @@ type ebpfSpecs struct {
 //
 // It can be passed ebpf.CollectionSpec.Assign.
 type ebpfProgramSpecs struct {
-	SockConnect4 *ebpf.ProgramSpec `ebpf:"sock_connect4"`
-	TcEgress     *ebpf.ProgramSpec `ebpf:"tc_egress"`
-	TcIngress    *ebpf.ProgramSpec `ebpf:"tc_ingress"`
+	SockConnect4     *ebpf.ProgramSpec `ebpf:"sock_connect4"`
+	SockConnect6     *ebpf.ProgramSpec `ebpf:"sock_connect6"`
+	SockGetpeername4 *ebpf.ProgramSpec `ebpf:"sock_getpeername4"`
+	SockGetpeername6 *ebpf.ProgramSpec `ebpf:"sock_getpeername6"`
+	SockRecvmsg4     *ebpf.ProgramSpec `ebpf:"sock_recvmsg4"`
+	SockRecvmsg6     *ebpf.ProgramSpec `ebpf:"sock_recvmsg6"`
+	SockSendmsg4     *ebpf.ProgramSpec `ebpf:"sock_sendmsg4"`
+	SockSendmsg6     *ebpf.ProgramSpec `ebpf:"sock_sendmsg6"`
+	TcEgress         *ebpf.ProgramSpec `ebpf:"tc_egress"`
+	TcIngress        *ebpf.ProgramSpec `ebpf:"tc_ingress"`
 }
 
 // ebpfMapSpecs contains maps before they are loaded into the kernel.
@@ -93,14 +100,28 @@ func (m *ebpfMaps) Close() error {
 //
 // It can be passed to loadEbpfObjects or ebpf.CollectionSpec.LoadAndAssign.
 type ebpfPrograms struct {
-	SockConnect4 *ebpf.Program `ebpf:"sock_connect4"`
-	TcEgress     *ebpf.Program `ebpf:"tc_egress"`
-	TcIngress    *ebpf.Program `ebpf:"tc_ingress"`
+	SockConnect4     *ebpf.Program `ebpf:"sock_connect4"`
+	SockConnect6     *ebpf.Program `ebpf:"sock_connect6"`
+	SockGetpeername4 *ebpf.Program `ebpf:"sock_getpeername4"`
+	SockGetpeername6 *ebpf.Program `ebpf:"sock_getpeername6"`
+	SockRecvmsg4     *ebpf.Program `ebpf:"sock_recvmsg4"`
+	SockRecvmsg6     *ebpf.Program `ebpf:"sock_recvmsg6"`
+	SockSendmsg4     *ebpf.Program `ebpf:"sock_sendmsg4"`
+	SockSendmsg6     *ebpf.Program `ebpf:"sock_sendmsg6"`
+	TcEgress         *ebpf.Program `ebpf:"tc_egress"`
+	TcIngress        *ebpf.Program `ebpf:"tc_ingress"`
 }
 
 func (p *ebpfPrograms) Close() error {
 	return _EbpfClose(
 		p.SockConnect4,
+		p.SockConnect6,
+		p.SockGetpeername4,
+		p.SockGetpeername6,
+		p.SockRecvmsg4,
+		p.SockRecvmsg6,
+		p.SockSendmsg4,
+		p.SockSendmsg6,
 		p.TcEgress,
 		p.TcIngress,
 	)

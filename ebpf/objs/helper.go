@@ -30,6 +30,13 @@ func (o *Object) AttachCgroup(cgroupPath string) {
 		prog       *ebpf.Program
 	}{
 		{"connect4", ebpf.AttachCGroupInet4Connect, o.objs.SockConnect4},
+		{"connect6", ebpf.AttachCGroupInet6Connect, o.objs.SockConnect6},
+		{"sendmsg4", ebpf.AttachCGroupUDP4Sendmsg, o.objs.SockSendmsg4},
+		{"sendmsg6", ebpf.AttachCGroupUDP6Sendmsg, o.objs.SockSendmsg6},
+		{"recvmsg4", ebpf.AttachCGroupUDP4Recvmsg, o.objs.SockRecvmsg4},
+		{"recvmsg6", ebpf.AttachCGroupUDP6Recvmsg, o.objs.SockRecvmsg6},
+		{"getpeername4", ebpf.AttachCgroupInet4GetPeername, o.objs.SockGetpeername4},
+		{"getpeername6", ebpf.AttachCgroupInet6GetPeername, o.objs.SockGetpeername6},
 	}
 
 	for _, att := range attachArray {

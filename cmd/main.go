@@ -1,5 +1,9 @@
 package main
 
-func main() {
+import "github.com/spf13/cobra"
 
+var rootCmd = &cobra.Command{}
+
+func main() {
+	rootCmd.Execute()
 }
