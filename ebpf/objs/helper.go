@@ -23,7 +23,7 @@ func NewObject(pinPath string) *Object {
 	return o
 }
 
-func (o *Object) AttachCgroup(cgroupPath string) {
+func (o *Object) AttachCgroup(cgroupPath string) *Object {
 	var attachArray = []struct {
 		name       string
 		attachType ebpf.AttachType
@@ -43,8 +43,10 @@ func (o *Object) AttachCgroup(cgroupPath string) {
 		attach.AttachCgroup(fmt.Sprintf("%v/%v", o.pinPath, att.name),
 			cgroupPath, att.attachType, att.prog)
 	}
+	return o
 }
 
-func (o *Object) AttachTc(ifIndex uint32) {
+func (o *Object) AttachTc(ifIndex uint32) *Object {
 	attach.AttachTc(ifIndex, o.objs.TcIngress, o.objs.TcEgress)
+	return o
 }

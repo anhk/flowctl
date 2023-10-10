@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 
+	"github.com/anhk/flowctl/app"
 	"github.com/spf13/cobra"
 )
 
@@ -41,6 +42,14 @@ var lbClrCmd = &cobra.Command{
 	},
 }
 
+var lbSetupCmd = &cobra.Command{
+	Use:   "setup",
+	Short: "Setup",
+	RunE: func(cmd *cobra.Command, args []string) error {
+		return app.NewLoadbalance().Setup()
+	},
+}
+
 var lbCmd = &cobra.Command{
 	Use:     "loadbalance",
 	Aliases: []string{"lb"},
@@ -65,6 +74,9 @@ func init() {
 
 	// clear
 	lbCmd.AddCommand(lbClrCmd)
+
+	// setup
+	lbCmd.AddCommand(lbSetupCmd)
 
 	// loadbalance
 	rootCmd.AddCommand(lbCmd)
