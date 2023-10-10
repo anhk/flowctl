@@ -1,6 +1,8 @@
 package app
 
 import (
+	"os"
+
 	"github.com/anhk/flowctl/ebpf/objs"
 	"github.com/anhk/flowctl/pkg/exception"
 )
@@ -19,6 +21,7 @@ func NewLoadbalance() *Loadbalance {
 
 func (lb *Loadbalance) Setup() error {
 	return exception.TryWithError(func() {
+		exception.Must(os.Mkdir(pinPath, 0x755))
 		objs.NewObject(pinPath).AttachCgroup(cgrouPath).AttachTc(2)
 	})
 }
