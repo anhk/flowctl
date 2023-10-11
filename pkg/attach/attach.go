@@ -34,6 +34,23 @@ func AttachCgroup(pinPath, cgroupPath string, attachType ebpf.AttachType, prog *
 	exception.Must(err)
 }
 
+func ClearTc(ifIndex uint32) {
+	tcnl, err := tc.Open(&tc.Config{})
+	exception.Must(err)
+	defer func() { tcnl.Close() }()
+	exception.Must(tcnl.SetOption(netlink.ExtendedAcknowledge, true))
+
+	qdiscs, err := tcnl.Qdisc().Get()
+	exception.Must(err)
+
+	// clear qdisc
+	for _, qdisc := range qdiscs {
+		if qdisc.Msg.Ifindex == ifIndex && qdisc.Attribute.Kind == "clsact" {
+			exception.Must(tcnl.Qdisc().Delete(&qdisc))
+		}
+	}
+}
+
 func AttachTc(ifIndex uint32, ingress, egress *ebpf.Program) {
 	tcnl, err := tc.Open(&tc.Config{})
 	exception.Must(err)

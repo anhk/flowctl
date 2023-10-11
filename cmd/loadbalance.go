@@ -42,11 +42,19 @@ var lbClrCmd = &cobra.Command{
 	},
 }
 
-var lbSetupCmd = &cobra.Command{
-	Use:   "setup",
-	Short: "Setup",
+var lbInstallCmd = &cobra.Command{
+	Use:   "install",
+	Short: "Install",
 	RunE: func(cmd *cobra.Command, args []string) error {
-		return app.NewLoadbalance().Setup()
+		return app.NewLoadbalance().Install()
+	},
+}
+
+var lbUnInstallCmd = &cobra.Command{
+	Use:   "uninstall",
+	Short: "UnInstall",
+	RunE: func(cmd *cobra.Command, args []string) error {
+		return app.NewLoadbalance().UnInstall()
 	},
 }
 
@@ -75,8 +83,9 @@ func init() {
 	// clear
 	lbCmd.AddCommand(lbClrCmd)
 
-	// setup
-	lbCmd.AddCommand(lbSetupCmd)
+	// install
+	lbCmd.AddCommand(lbInstallCmd)
+	lbCmd.AddCommand(lbUnInstallCmd)
 
 	// loadbalance
 	rootCmd.AddCommand(lbCmd)
